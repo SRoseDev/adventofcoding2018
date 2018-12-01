@@ -4,7 +4,7 @@ curF = 0
 frequencies[curF] = 1
 
 while not foundDuplicate:
-    with open('day1input.txt') as day1input:
+    with open('Day1/day1input.txt') as day1input:
         for frequency in day1input:
             curF = curF + int(frequency)
             fc = frequencies.get(curF, 0)
