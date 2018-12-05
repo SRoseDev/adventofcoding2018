@@ -15,8 +15,7 @@ while not startLen == lastLen:
     for c in char_range('a', 'z'):
         r1 = f'{c}{c.upper()}'
         r2 = f'{c.upper()}{c}'
-        curString = curString.replace(r1, '')
-        curString = curString.replace(r2, '')
+        curString = curString.replace(r1, '').replace(r2, '')
     lastLen = len(curString)
 print(f'Len: {len(curString)} {curString}')
 
