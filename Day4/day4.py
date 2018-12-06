@@ -1,6 +1,5 @@
 from datetime import datetime
 import operator
-from collections import OrderedDict
 
 events = list()
 with open('day4input.txt') as info:
