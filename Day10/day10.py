@@ -1,7 +1,13 @@
 from dataclasses import dataclass
-from PIL import Image
+from tkinter import *
 
 points = list()
+master = Tk()
+curTime = 10800
+
+w = Canvas(master, width=500, height=500)
+
+w.pack()
 
 
 @dataclass
@@ -12,7 +18,11 @@ class MessagePoint:
     vy: int
 
 
-def plotPointsForTime(t: int):
+def plot_points_for_time(val):
+    global curTime
+    curTime = int(val)
+    print(f'Plotting Time: {val}')
+    t = int(val)
     p = list()
     maxX = -999999
     maxY = -999999
@@ -37,22 +47,20 @@ def plotPointsForTime(t: int):
 
     # only print if points are close together
     # print(f'{minX} {maxX} {minY} {maxY}')
-    if (maxX - minX) < 150:
-        print(f'{minX} {maxX} {minY} {maxY}')
-        matrix = [[' ' for y in range(minY, maxY + 1)] for x in range(minX, maxX + 1)]
-        print(f'Size for {t}: {maxX - minX + 1} {maxY - minY + 1}')
+    if (maxX - minX) < 150 or (maxY - minY) < 150:
+        # print(f'{minX} {maxX} {minY} {maxY}')
+
+        w.delete("all")
+
         for point in p:
             # print(f'Placing {point.px - minX} {point.py - minY}')
-            matrix[point.px - minX][point.py - minY] = '#'
+            w.create_line(point.px, point.py, point.px+1, point.py+1, fill="#ff0000")
 
-        with open(f'{t}output.txt', "w+") as writeFile:
-            for row in matrix:
-                writeFile.write(str(row))
-                writeFile.write('\n')
+        w.update()
 
 
-
-
+s = Scale(master, from_=10800, to=10850, length=300, orient=HORIZONTAL, command=plot_points_for_time)
+s.pack()
 
 
 with open('day10input.txt') as info:
@@ -66,7 +74,5 @@ with open('day10input.txt') as info:
             int(velocities[0]),
             int(velocities[1])))
 
-print(points)
-start = 1000
-for t in range(start, start+30000):
-    plotPointsForTime(t)
+
+mainloop()
