@@ -10,7 +10,7 @@ class Marble:
         self.next = next
 
 
-marbleCount = 72061
+marbleCount = 7206100
 playerCount = 428
 
 m0 = Marble(0, None, None)
@@ -33,10 +33,12 @@ for m in range(2, marbleCount):
         for x in range(0, 7):
             curMarble = curMarble.prev
 
+        # print(f'7 cc {curMarble.data}')
         # add score
         scores[player] = scores.get(player, 0) + curMarble.data + m
         # do remove
         curMarble.prev.next = curMarble.next
+        curMarble.next.prev = curMarble.prev
         # marble at removed index becomes new current
         curMarble = curMarble.next
     # place marble at current + 2 clockwise
@@ -51,6 +53,6 @@ for m in range(2, marbleCount):
         curMarble.prev = nMarble
         curMarble = nMarble
 
-    print(f'{curMarble.prev.data} {curMarble.data} {curMarble.next.data}')
+    #print(f'{curMarble.prev.data} {curMarble.data} {curMarble.next.data}')
 
 print(sorted(scores.items(), key=operator.itemgetter(1), reverse=True))
